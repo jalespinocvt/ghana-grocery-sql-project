@@ -1,165 +1,28 @@
--- Ghana Grocery Items Database
--- Educational sample data. Prices and stock quantities are illustrative, not live market prices.
--- Verify exact product names, package sizes, and country-of-origin claims before real-world use.
-
-CREATE DATABASE IF NOT EXISTS ghana_grocery_db
-  CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE DATABASE IF NOT EXISTS ghana_grocery_db;
 USE ghana_grocery_db;
 
-DROP TABLE IF EXISTS grocery_items;
-
-CREATE TABLE grocery_items (
-    item_id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE IF NOT EXISTS grocery_items (
+    item_id INT AUTO_INCREMENT PRIMARY KEY,
     product_name VARCHAR(150) NOT NULL,
     brand_name VARCHAR(100) NOT NULL,
     category VARCHAR(80) NOT NULL,
-    country_of_origin VARCHAR(60) NOT NULL DEFAULT 'Ghana',
+    country_of_origin VARCHAR(60) NOT NULL,
     package_size VARCHAR(50) NOT NULL,
-    price_ghs DECIMAL(10,2) NOT NULL CHECK (price_ghs >= 0),
-    stock_quantity INT UNSIGNED NOT NULL DEFAULT 0,
+    price_ghs DECIMAL(10,2) NOT NULL,
+    stock_quantity INT NOT NULL DEFAULT 0,
     expiration_date DATE NULL,
-    is_available BOOLEAN NOT NULL DEFAULT TRUE,
-    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+    is_available BOOLEAN NOT NULL DEFAULT TRUE
 );
 
-INSERT INTO grocery_items
-(product_name, brand_name, category, country_of_origin, package_size, price_ghs, stock_quantity, expiration_date, is_available)
-VALUES
-('Philfry Vegetable Cooking Oil', 'Philfry', 'Cooking Oil', 'Ghana', '2 L', 75.00, 12, '2027-01-03', TRUE),
-('Philfry Vegetable Cooking Oil', 'Philfry', 'Cooking Oil', 'Ghana', '2.5 L', 89.00, 19, '2027-02-06', TRUE),
-('Philfry Vegetable Cooking Oil', 'Philfry', 'Cooking Oil', 'Ghana', '5 L', 165.00, 26, '2027-03-09', TRUE),
-('Sunphil Premium Sunflower Oil', 'Sunphil', 'Cooking Oil', 'Ghana', '2.5 L', 105.00, 33, '2027-04-12', TRUE),
-('Sunphil Premium Sunflower Oil', 'Sunphil', 'Cooking Oil', 'Ghana', '5 L', 198.00, 40, '2027-05-15', TRUE),
-('Arielle Vegetable Oil', 'Arielle', 'Cooking Oil', 'Ghana', '1 L', 42.00, 47, '2027-06-18', TRUE),
-('Arielle Vegetable Oil', 'Arielle', 'Cooking Oil', 'Ghana', '2.5 L', 91.00, 54, '2027-07-21', TRUE),
-('Arielle Vegetable Oil', 'Arielle', 'Cooking Oil', 'Ghana', '5 L', 172.00, 61, '2027-08-24', TRUE),
-('Theresa Jasmine Rice', 'Theresa Foods', 'Rice and Grains', 'Ghana', '1 kg', 28.00, 68, '2027-09-27', TRUE),
-('Theresa Jasmine Rice', 'Theresa Foods', 'Rice and Grains', 'Ghana', '5 kg', 128.00, 10, '2027-10-03', TRUE),
-('Theresa Jasmine Rice', 'Theresa Foods', 'Rice and Grains', 'Ghana', '10 kg', 245.00, 17, '2027-11-06', TRUE),
-('Theresa Cooking Oil', 'Theresa Foods', 'Cooking Oil', 'Ghana', '1 L', 39.00, 24, '2027-12-09', TRUE),
-('Theresa Cooking Oil', 'Theresa Foods', 'Cooking Oil', 'Ghana', '2 L', 74.00, 31, '2027-01-12', TRUE),
-('Theresa Cooking Oil', 'Theresa Foods', 'Cooking Oil', 'Ghana', '5 L', 178.00, 38, '2027-02-15', TRUE),
-('Kalyppo Fruit Drink', 'Kalyppo', 'Beverages', 'Ghana', '125 ml', 4.00, 45, '2027-03-18', TRUE),
-('Kalyppo Fruit Drink', 'Kalyppo', 'Beverages', 'Ghana', '250 ml', 6.00, 52, '2027-04-21', TRUE),
-('Kalyppo Fruit Drink', 'Kalyppo', 'Beverages', 'Ghana', 'Pack of 6 x 125 ml', 22.00, 59, '2027-05-24', TRUE),
-('Kalyppo Fruit Drink', 'Kalyppo', 'Beverages', 'Ghana', 'Pack of 12 x 125 ml', 43.00, 66, '2027-06-27', TRUE),
-('Kalyppo Fruit Drink', 'Kalyppo', 'Beverages', 'Ghana', 'Pack of 24 x 125 ml', 84.00, 8, '2027-07-03', TRUE),
-('Kalyppo Fruit Drink', 'Kalyppo', 'Beverages', 'Ghana', 'Carton of 48 x 125 ml', 160.00, 15, '2027-08-06', TRUE),
-('Philfry Vegetable Cooking Oil', 'Philfry', 'Cooking Oil', 'Ghana', '500 ml', 22.00, 22, '2027-09-09', TRUE),
-('Philfry Vegetable Cooking Oil', 'Philfry', 'Cooking Oil', 'Ghana', '1 L', 40.00, 29, '2027-10-12', TRUE),
-('Philfry Vegetable Cooking Oil', 'Philfry', 'Cooking Oil', 'Ghana', '750 ml', 31.00, 36, '2027-11-15', TRUE),
-('Sunphil Premium Sunflower Oil', 'Sunphil', 'Cooking Oil', 'Ghana', '500 ml', 27.00, 43, '2027-12-18', TRUE),
-('Sunphil Premium Sunflower Oil', 'Sunphil', 'Cooking Oil', 'Ghana', '1 L', 49.00, 50, '2027-01-21', TRUE),
-('Sunphil Premium Sunflower Oil', 'Sunphil', 'Cooking Oil', 'Ghana', '2 L', 93.00, 57, '2027-02-24', TRUE),
-('Arielle Vegetable Oil', 'Arielle', 'Cooking Oil', 'Ghana', '500 ml', 21.00, 64, '2027-03-27', TRUE),
-('Arielle Vegetable Oil', 'Arielle', 'Cooking Oil', 'Ghana', '750 ml', 30.00, 6, '2027-04-03', TRUE),
-('Arielle Vegetable Oil', 'Arielle', 'Cooking Oil', 'Ghana', '1.5 L', 62.00, 13, '2027-05-06', TRUE),
-('Theresa Jasmine Rice', 'Theresa Foods', 'Rice and Grains', 'Ghana', '2 kg', 54.00, 20, '2027-06-09', TRUE),
-('Theresa Jasmine Rice', 'Theresa Foods', 'Rice and Grains', 'Ghana', '25 kg', 590.00, 27, '2027-07-12', TRUE),
-('Theresa Cooking Oil', 'Theresa Foods', 'Cooking Oil', 'Ghana', '500 ml', 21.00, 34, '2027-08-15', TRUE),
-('Theresa Cooking Oil', 'Theresa Foods', 'Cooking Oil', 'Ghana', '750 ml', 29.00, 41, '2027-09-18', TRUE),
-('Theresa Cooking Oil', 'Theresa Foods', 'Cooking Oil', 'Ghana', '1.5 L', 57.00, 48, '2027-10-21', TRUE),
-('Kalyppo Fruit Drink', 'Kalyppo', 'Beverages', 'Ghana', 'Single bottle 125 ml', 4.00, 55, '2027-11-24', TRUE),
-('Kalyppo Fruit Drink', 'Kalyppo', 'Beverages', 'Ghana', 'Pack of 4 x 125 ml', 15.00, 62, '2027-12-27', TRUE),
-('Kalyppo Fruit Drink', 'Kalyppo', 'Beverages', 'Ghana', 'Pack of 8 x 125 ml', 30.00, 69, '2027-01-03', TRUE),
-('Kalyppo Fruit Drink', 'Kalyppo', 'Beverages', 'Ghana', 'Pack of 10 x 125 ml', 37.00, 11, '2027-02-06', TRUE),
-('Kalyppo Fruit Drink', 'Kalyppo', 'Beverages', 'Ghana', 'Pack of 18 x 125 ml', 64.00, 18, '2027-03-09', TRUE),
-('Kalyppo Fruit Drink', 'Kalyppo', 'Beverages', 'Ghana', 'Pack of 30 x 125 ml', 105.00, 25, '2027-04-12', TRUE),
-('Philfry Vegetable Cooking Oil', 'Philfry', 'Cooking Oil', 'Ghana', '250 ml', 12.00, 32, '2027-05-15', TRUE),
-('Philfry Vegetable Cooking Oil', 'Philfry', 'Cooking Oil', 'Ghana', '750 ml', 31.00, 39, '2027-06-18', TRUE),
-('Philfry Vegetable Cooking Oil', 'Philfry', 'Cooking Oil', 'Ghana', '1.5 L', 59.00, 46, '2027-07-21', TRUE),
-('Philfry Vegetable Cooking Oil', 'Philfry', 'Cooking Oil', 'Ghana', '3 L', 116.00, 53, '2027-08-24', TRUE),
-('Sunphil Premium Sunflower Oil', 'Sunphil', 'Cooking Oil', 'Ghana', '250 ml', 15.00, 60, '2027-09-27', TRUE),
-('Sunphil Premium Sunflower Oil', 'Sunphil', 'Cooking Oil', 'Ghana', '750 ml', 38.00, 67, '2027-10-03', TRUE),
-('Sunphil Premium Sunflower Oil', 'Sunphil', 'Cooking Oil', 'Ghana', '1.5 L', 73.00, 9, '2027-11-06', TRUE),
-('Sunphil Premium Sunflower Oil', 'Sunphil', 'Cooking Oil', 'Ghana', '3 L', 139.00, 16, '2027-12-09', TRUE),
-('Arielle Vegetable Oil', 'Arielle', 'Cooking Oil', 'Ghana', '250 ml', 12.00, 23, '2027-01-12', TRUE),
-('Arielle Vegetable Oil', 'Arielle', 'Cooking Oil', 'Ghana', '3 L', 118.00, 30, '2027-02-15', TRUE),
-('Theresa Jasmine Rice', 'Theresa Foods', 'Rice and Grains', 'Ghana', '500 g', 15.00, 37, '2027-03-18', TRUE),
-('Theresa Jasmine Rice', 'Theresa Foods', 'Rice and Grains', 'Ghana', '3 kg', 81.00, 44, '2027-04-21', TRUE),
-('Theresa Jasmine Rice', 'Theresa Foods', 'Rice and Grains', 'Ghana', '20 kg', 475.00, 51, '2027-05-24', TRUE),
-('Theresa Cooking Oil', 'Theresa Foods', 'Cooking Oil', 'Ghana', '250 ml', 12.00, 58, '2027-06-27', TRUE),
-('Theresa Cooking Oil', 'Theresa Foods', 'Cooking Oil', 'Ghana', '3 L', 112.00, 65, '2027-07-03', TRUE),
-('Kalyppo Fruit Drink', 'Kalyppo', 'Beverages', 'Ghana', 'Pack of 2 x 125 ml', 8.00, 7, '2027-08-06', TRUE),
-('Kalyppo Fruit Drink', 'Kalyppo', 'Beverages', 'Ghana', 'Pack of 3 x 125 ml', 11.00, 14, '2027-09-09', TRUE),
-('Kalyppo Fruit Drink', 'Kalyppo', 'Beverages', 'Ghana', 'Pack of 5 x 125 ml', 19.00, 21, '2027-10-12', TRUE),
-('Kalyppo Fruit Drink', 'Kalyppo', 'Beverages', 'Ghana', 'Pack of 20 x 125 ml', 72.00, 28, '2027-11-15', TRUE),
-('Kalyppo Fruit Drink', 'Kalyppo', 'Beverages', 'Ghana', 'Pack of 36 x 125 ml', 126.00, 35, '2027-12-18', TRUE),
-('Philfry Vegetable Cooking Oil', 'Philfry', 'Cooking Oil', 'Ghana', '4 L', 145.00, 42, '2027-01-21', TRUE),
-('Sunphil Premium Sunflower Oil', 'Sunphil', 'Cooking Oil', 'Ghana', '4 L', 164.00, 49, '2027-02-24', TRUE),
-('Arielle Vegetable Oil', 'Arielle', 'Cooking Oil', 'Ghana', '4 L', 151.00, 56, '2027-03-27', TRUE),
-('Theresa Jasmine Rice', 'Theresa Foods', 'Rice and Grains', 'Ghana', '750 g', 22.00, 63, '2027-04-03', TRUE),
-('Theresa Jasmine Rice', 'Theresa Foods', 'Rice and Grains', 'Ghana', '4 kg', 104.00, 5, '2027-05-06', TRUE),
-('Theresa Cooking Oil', 'Theresa Foods', 'Cooking Oil', 'Ghana', '4 L', 146.00, 12, '2027-06-09', TRUE),
-('Kalyppo Fruit Drink', 'Kalyppo', 'Beverages', 'Ghana', 'Pack of 15 x 125 ml', 54.00, 19, '2027-07-12', TRUE),
-('Kalyppo Fruit Drink', 'Kalyppo', 'Beverages', 'Ghana', 'Pack of 16 x 125 ml', 58.00, 26, '2027-08-15', TRUE),
-('Kalyppo Fruit Drink', 'Kalyppo', 'Beverages', 'Ghana', 'Pack of 40 x 125 ml', 140.00, 33, '2027-09-18', TRUE),
-('Philfry Vegetable Cooking Oil', 'Philfry', 'Cooking Oil', 'Ghana', '10 L', 320.00, 40, '2027-10-21', TRUE),
-('Sunphil Premium Sunflower Oil', 'Sunphil', 'Cooking Oil', 'Ghana', '10 L', 380.00, 47, '2027-11-24', TRUE),
-('Arielle Vegetable Oil', 'Arielle', 'Cooking Oil', 'Ghana', '10 L', 330.00, 54, '2027-12-27', TRUE),
-('Theresa Jasmine Rice', 'Theresa Foods', 'Rice and Grains', 'Ghana', '50 kg', 1120.00, 61, '2027-01-03', TRUE),
-('Theresa Cooking Oil', 'Theresa Foods', 'Cooking Oil', 'Ghana', '10 L', 350.00, 68, '2027-02-06', TRUE),
-('Kalyppo Fruit Drink', 'Kalyppo', 'Beverages', 'Ghana', 'Pack of 2 cartons x 24', 320.00, 10, '2027-03-09', TRUE),
-('Philfry Vegetable Cooking Oil', 'Philfry', 'Cooking Oil', 'Ghana', '1 gallon', 155.00, 17, '2027-04-12', TRUE),
-('Sunphil Premium Sunflower Oil', 'Sunphil', 'Cooking Oil', 'Ghana', '1 gallon', 180.00, 24, '2027-05-15', TRUE),
-('Arielle Vegetable Oil', 'Arielle', 'Cooking Oil', 'Ghana', '1 gallon', 160.00, 31, '2027-06-18', TRUE),
-('Theresa Jasmine Rice', 'Theresa Foods', 'Rice and Grains', 'Ghana', '1.5 kg', 41.00, 38, '2027-07-21', TRUE),
-('Theresa Cooking Oil', 'Theresa Foods', 'Cooking Oil', 'Ghana', '6 L', 215.00, 45, '2027-08-24', TRUE),
-('Kalyppo Fruit Drink', 'Kalyppo', 'Beverages', 'Ghana', 'Pack of 60 x 125 ml', 198.00, 52, '2027-09-27', TRUE),
-('Philfry Vegetable Cooking Oil', 'Philfry', 'Cooking Oil', 'Ghana', '750 ml bottle', 32.00, 59, '2027-10-03', TRUE),
-('Sunphil Premium Sunflower Oil', 'Sunphil', 'Cooking Oil', 'Ghana', '750 ml bottle', 39.00, 66, '2027-11-06', TRUE),
-('Arielle Vegetable Oil', 'Arielle', 'Cooking Oil', 'Ghana', '750 ml bottle', 31.00, 8, '2027-12-09', TRUE),
-('Theresa Jasmine Rice', 'Theresa Foods', 'Rice and Grains', 'Ghana', '2.5 kg', 68.00, 15, '2027-01-12', TRUE),
-('Theresa Cooking Oil', 'Theresa Foods', 'Cooking Oil', 'Ghana', '2.5 L', 93.00, 22, '2027-02-15', TRUE),
-('Kalyppo Fruit Drink', 'Kalyppo', 'Beverages', 'Ghana', 'Pack of 6 bottles', 23.00, 29, '2027-03-18', TRUE),
-('Philfry Vegetable Cooking Oil', 'Philfry', 'Cooking Oil', 'Ghana', '5 L jerrycan', 168.00, 36, '2027-04-21', TRUE),
-('Sunphil Premium Sunflower Oil', 'Sunphil', 'Cooking Oil', 'Ghana', '5 L jerrycan', 202.00, 43, '2027-05-24', TRUE),
-('Arielle Vegetable Oil', 'Arielle', 'Cooking Oil', 'Ghana', '5 L jerrycan', 175.00, 50, '2027-06-27', TRUE),
-('Theresa Jasmine Rice', 'Theresa Foods', 'Rice and Grains', 'Ghana', '5 kg bag', 130.00, 57, '2027-07-03', TRUE),
-('Theresa Cooking Oil', 'Theresa Foods', 'Cooking Oil', 'Ghana', '5 L bottle', 180.00, 64, '2027-08-06', TRUE),
-('Kalyppo Fruit Drink', 'Kalyppo', 'Beverages', 'Ghana', 'Single serve 125 ml', 4.00, 6, '2027-09-09', TRUE),
-('Philfry Vegetable Cooking Oil', 'Philfry', 'Cooking Oil', 'Ghana', '2 L bottle', 76.00, 13, '2027-10-12', TRUE),
-('Sunphil Premium Sunflower Oil', 'Sunphil', 'Cooking Oil', 'Ghana', '2 L bottle', 95.00, 20, '2027-11-15', TRUE),
-('Arielle Vegetable Oil', 'Arielle', 'Cooking Oil', 'Ghana', '2 L bottle', 78.00, 27, '2027-12-18', TRUE),
-('Theresa Jasmine Rice', 'Theresa Foods', 'Rice and Grains', 'Ghana', '10 kg bag', 250.00, 34, '2027-01-21', TRUE),
-('Theresa Cooking Oil', 'Theresa Foods', 'Cooking Oil', 'Ghana', '2 L bottle', 75.00, 41, '2027-02-24', TRUE),
-('Kalyppo Fruit Drink', 'Kalyppo', 'Beverages', 'Ghana', 'Pack of 12 bottles', 45.00, 48, '2027-03-27', TRUE),
-('Kalyppo Fruit Drink', 'Kalyppo', 'Beverages', 'Ghana', 'Pack of 24 bottles', 86.00, 55, '2027-04-03', TRUE);
-
--- Verify record count (expected: 100).
+-- Example grocery records associated with Ghanaian food brands.
+-- Verify specific product variants and prices before submitting as factual market data.
+INSERT INTO grocery_items (item_id, product_name, brand_name, category, country_of_origin, package_size, price_ghs, stock_quantity, expiration_date, is_available) VALUES\n(1, 'Fruit Drink 250ml', 'Kalyppo', 'Beverage', 'Ghana', '250ml', 3.20, 13, '2027-02-02', 1),\n(2, 'Fruit Drink 250ml (Variant 2)', 'Kalyppo', 'Beverage', 'Ghana', '250ml', 3.90, 26, '2027-03-03', 1),\n(3, 'Fruit Drink 250ml (Variant 3)', 'Kalyppo', 'Beverage', 'Ghana', '250ml', 4.60, 39, '2027-04-04', 1),\n(4, 'Fruit Drink 250ml (Variant 4)', 'Kalyppo', 'Beverage', 'Ghana', '250ml', 5.30, 52, '2027-05-05', 1),\n(5, 'Mango Drink 250ml', 'Kalyppo', 'Beverage', 'Ghana', '250ml', 6.00, 65, '2027-06-06', 1),\n(6, 'Mango Drink 250ml (Variant 2)', 'Kalyppo', 'Beverage', 'Ghana', '250ml', 6.70, 78, '2027-07-07', 1),\n(7, 'Mango Drink 250ml (Variant 3)', 'Kalyppo', 'Beverage', 'Ghana', '250ml', 7.40, 91, '2027-08-08', 1),\n(8, 'Mango Drink 250ml (Variant 4)', 'Kalyppo', 'Beverage', 'Ghana', '250ml', 8.10, 4, '2027-09-09', 1),\n(9, 'Orange Drink 250ml', 'Kalyppo', 'Beverage', 'Ghana', '250ml', 8.80, 17, '2027-10-10', 1),\n(10, 'Orange Drink 250ml (Variant 2)', 'Kalyppo', 'Beverage', 'Ghana', '250ml', 9.50, 30, '2027-11-11', 1),\n(11, 'Orange Drink 250ml (Variant 3)', 'Kalyppo', 'Beverage', 'Ghana', '250ml', 10.20, 43, '2027-12-12', 1),\n(12, 'Orange Drink 250ml (Variant 4)', 'Kalyppo', 'Beverage', 'Ghana', '250ml', 10.90, 56, '2027-01-13', 1),\n(13, 'Vegetable Oil 1L', 'Philfry', 'Cooking Oil', 'Ghana', '1L', 11.60, 69, '2027-02-14', 1),\n(14, 'Vegetable Oil 1L (Variant 2)', 'Philfry', 'Cooking Oil', 'Ghana', '1L', 12.30, 82, '2027-03-15', 1),\n(15, 'Vegetable Oil 1L (Variant 3)', 'Philfry', 'Cooking Oil', 'Ghana', '1L', 13.00, 95, '2027-04-16', 1),\n(16, 'Vegetable Oil 1L (Variant 4)', 'Philfry', 'Cooking Oil', 'Ghana', '1L', 13.70, 8, '2027-05-17', 1),\n(17, 'Vegetable Oil 2L', 'Philfry', 'Cooking Oil', 'Ghana', '2L', 14.40, 21, '2027-06-18', 1),\n(18, 'Vegetable Oil 2L (Variant 2)', 'Philfry', 'Cooking Oil', 'Ghana', '2L', 15.10, 34, '2027-07-19', 1),\n(19, 'Vegetable Oil 2L (Variant 3)', 'Philfry', 'Cooking Oil', 'Ghana', '2L', 15.80, 47, '2027-08-20', 1),\n(20, 'Vegetable Oil 2L (Variant 4)', 'Philfry', 'Cooking Oil', 'Ghana', '2L', 16.50, 60, '2027-09-21', 1),\n(21, 'Vegetable Oil 5L', 'Philfry', 'Cooking Oil', 'Ghana', '5L', 17.20, 73, '2027-10-22', 1),\n(22, 'Vegetable Oil 5L (Variant 2)', 'Philfry', 'Cooking Oil', 'Ghana', '5L', 17.90, 86, '2027-11-23', 1),\n(23, 'Vegetable Oil 5L (Variant 3)', 'Philfry', 'Cooking Oil', 'Ghana', '5L', 18.60, 99, '2027-12-24', 1),\n(24, 'Vegetable Oil 5L (Variant 4)', 'Philfry', 'Cooking Oil', 'Ghana', '5L', 19.30, 12, '2027-01-25', 1),\n(25, 'Local Rice 1kg', 'Sunshine', 'Rice', 'Ghana', '1kg', 20.00, 25, '2027-02-26', 1),\n(26, 'Local Rice 1kg (Variant 2)', 'Sunshine', 'Rice', 'Ghana', '1kg', 20.70, 38, '2027-03-27', 1),\n(27, 'Local Rice 1kg (Variant 3)', 'Sunshine', 'Rice', 'Ghana', '1kg', 21.40, 51, '2027-04-01', 1),\n(28, 'Local Rice 1kg (Variant 4)', 'Sunshine', 'Rice', 'Ghana', '1kg', 22.10, 64, '2027-05-02', 1),\n(29, 'Local Rice 5kg', 'Sunshine', 'Rice', 'Ghana', '5kg', 22.80, 77, '2027-06-03', 1),\n(30, 'Local Rice 5kg (Variant 2)', 'Sunshine', 'Rice', 'Ghana', '5kg', 23.50, 90, '2027-07-04', 1),\n(31, 'Local Rice 5kg (Variant 3)', 'Sunshine', 'Rice', 'Ghana', '5kg', 24.20, 3, '2027-08-05', 1),\n(32, 'Local Rice 5kg (Variant 4)', 'Sunshine', 'Rice', 'Ghana', '5kg', 24.90, 16, '2027-09-06', 1),\n(33, 'Perfumed Rice 5kg', 'Sunshine', 'Rice', 'Ghana', '5kg', 25.60, 29, '2027-10-07', 1),\n(34, 'Perfumed Rice 5kg (Variant 2)', 'Sunshine', 'Rice', 'Ghana', '5kg', 26.30, 42, '2027-11-08', 1),\n(35, 'Perfumed Rice 5kg (Variant 3)', 'Sunshine', 'Rice', 'Ghana', '5kg', 27.00, 55, '2027-12-09', 1),\n(36, 'Perfumed Rice 5kg (Variant 4)', 'Sunshine', 'Rice', 'Ghana', '5kg', 2.70, 68, '2027-01-10', 1),\n(37, 'Corn Dough 1kg', 'Theresa Foods', 'Cereal', 'Ghana', '1kg', 3.40, 81, '2027-02-11', 1),\n(38, 'Corn Dough 1kg (Variant 2)', 'Theresa Foods', 'Cereal', 'Ghana', '1kg', 4.10, 94, '2027-03-12', 1),\n(39, 'Corn Dough 1kg (Variant 3)', 'Theresa Foods', 'Cereal', 'Ghana', '1kg', 4.80, 7, '2027-04-13', 1),\n(40, 'Corn Dough 1kg (Variant 4)', 'Theresa Foods', 'Cereal', 'Ghana', '1kg', 5.50, 20, '2027-05-14', 1),\n(41, 'Cassava Dough 1kg', 'Theresa Foods', 'Cereal', 'Ghana', '1kg', 6.20, 33, '2027-06-15', 1),\n(42, 'Cassava Dough 1kg (Variant 2)', 'Theresa Foods', 'Cereal', 'Ghana', '1kg', 6.90, 46, '2027-07-16', 1),\n(43, 'Cassava Dough 1kg (Variant 3)', 'Theresa Foods', 'Cereal', 'Ghana', '1kg', 7.60, 59, '2027-08-17', 1),\n(44, 'Cassava Dough 1kg (Variant 4)', 'Theresa Foods', 'Cereal', 'Ghana', '1kg', 8.30, 72, '2027-09-18', 1),\n(45, 'Plantain Flour 500g', 'Theresa Foods', 'Cereal', 'Ghana', '500g', 9.00, 85, '2027-10-19', 1),\n(46, 'Plantain Flour 500g (Variant 2)', 'Theresa Foods', 'Cereal', 'Ghana', '500g', 9.70, 98, '2027-11-20', 1),\n(47, 'Plantain Flour 500g (Variant 3)', 'Theresa Foods', 'Cereal', 'Ghana', '500g', 10.40, 11, '2027-12-21', 1),\n(48, 'Plantain Flour 500g (Variant 4)', 'Theresa Foods', 'Cereal', 'Ghana', '500g', 11.10, 24, '2027-01-22', 1),\n(49, 'Palm Soup Base 400g', 'Nkulenu', 'Canned Food', 'Ghana', '400g', 11.80, 37, '2027-02-23', 1),\n(50, 'Palm Soup Base 400g (Variant 2)', 'Nkulenu', 'Canned Food', 'Ghana', '400g', 12.50, 50, '2027-03-24', 1),\n(51, 'Palm Soup Base 400g (Variant 3)', 'Nkulenu', 'Canned Food', 'Ghana', '400g', 13.20, 63, '2027-04-25', 1),\n(52, 'Palm Soup Base 400g (Variant 4)', 'Nkulenu', 'Canned Food', 'Ghana', '400g', 13.90, 76, '2027-05-26', 1),\n(53, 'Groundnut Soup 400g', 'Nkulenu', 'Canned Food', 'Ghana', '400g', 14.60, 89, '2027-06-27', 1),\n(54, 'Groundnut Soup 400g (Variant 2)', 'Nkulenu', 'Canned Food', 'Ghana', '400g', 15.30, 2, '2027-07-01', 1),\n(55, 'Groundnut Soup 400g (Variant 3)', 'Nkulenu', 'Canned Food', 'Ghana', '400g', 16.00, 15, '2027-08-02', 1),\n(56, 'Groundnut Soup 400g (Variant 4)', 'Nkulenu', 'Canned Food', 'Ghana', '400g', 16.70, 28, '2027-09-03', 1),\n(57, 'Shito 250g', 'Nkulenu', 'Canned Food', 'Ghana', '250g', 17.40, 41, '2027-10-04', 1),\n(58, 'Shito 250g (Variant 2)', 'Nkulenu', 'Canned Food', 'Ghana', '250g', 18.10, 54, '2027-11-05', 1),\n(59, 'Shito 250g (Variant 3)', 'Nkulenu', 'Canned Food', 'Ghana', '250g', 18.80, 67, '2027-12-06', 1),\n(60, 'Shito 250g (Variant 4)', 'Nkulenu', 'Canned Food', 'Ghana', '250g', 19.50, 80, '2027-01-07', 1),\n(61, 'Pineapple Juice 1L', 'Blue Skies', 'Juice', 'Ghana', '1L', 20.20, 93, '2027-02-08', 1),\n(62, 'Pineapple Juice 1L (Variant 2)', 'Blue Skies', 'Juice', 'Ghana', '1L', 20.90, 6, '2027-03-09', 1),\n(63, 'Pineapple Juice 1L (Variant 3)', 'Blue Skies', 'Juice', 'Ghana', '1L', 21.60, 19, '2027-04-10', 1),\n(64, 'Pineapple Juice 1L (Variant 4)', 'Blue Skies', 'Juice', 'Ghana', '1L', 22.30, 32, '2027-05-11', 1),\n(65, 'Mango Juice 1L', 'Blue Skies', 'Juice', 'Ghana', '1L', 23.00, 45, '2027-06-12', 1),\n(66, 'Mango Juice 1L (Variant 2)', 'Blue Skies', 'Juice', 'Ghana', '1L', 23.70, 58, '2027-07-13', 1),\n(67, 'Mango Juice 1L (Variant 3)', 'Blue Skies', 'Juice', 'Ghana', '1L', 24.40, 71, '2027-08-14', 1),\n(68, 'Mango Juice 1L (Variant 4)', 'Blue Skies', 'Juice', 'Ghana', '1L', 25.10, 84, '2027-09-15', 1),\n(69, 'Mixed Fruit Juice 1L', 'Blue Skies', 'Juice', 'Ghana', '1L', 25.80, 97, '2027-10-16', 1),\n(70, 'Mixed Fruit Juice 1L (Variant 2)', 'Blue Skies', 'Juice', 'Ghana', '1L', 26.50, 10, '2027-11-17', 1),\n(71, 'Mixed Fruit Juice 1L (Variant 3)', 'Blue Skies', 'Juice', 'Ghana', '1L', 27.20, 23, '2027-12-18', 1),\n(72, 'Mixed Fruit Juice 1L (Variant 4)', 'Blue Skies', 'Juice', 'Ghana', '1L', 2.90, 36, '2027-01-19', 1),\n(73, 'Alomo Bitters 200ml', 'Kasapreko', 'Beverage', 'Ghana', '200ml', 3.60, 49, '2027-02-20', 1),\n(74, 'Alomo Bitters 200ml (Variant 2)', 'Kasapreko', 'Beverage', 'Ghana', '200ml', 4.30, 62, '2027-03-21', 1),\n(75, 'Alomo Bitters 200ml (Variant 3)', 'Kasapreko', 'Beverage', 'Ghana', '200ml', 5.00, 75, '2027-04-22', 1),\n(76, 'Alomo Bitters 200ml (Variant 4)', 'Kasapreko', 'Beverage', 'Ghana', '200ml', 5.70, 88, '2027-05-23', 1),\n(77, 'Herbal Drink 330ml', 'Kasapreko', 'Beverage', 'Ghana', '330ml', 6.40, 1, '2027-06-24', 1),\n(78, 'Herbal Drink 330ml (Variant 2)', 'Kasapreko', 'Beverage', 'Ghana', '330ml', 7.10, 14, '2027-07-25', 1),\n(79, 'Herbal Drink 330ml (Variant 3)', 'Kasapreko', 'Beverage', 'Ghana', '330ml', 7.80, 27, '2027-08-26', 1),\n(80, 'Herbal Drink 330ml (Variant 4)', 'Kasapreko', 'Beverage', 'Ghana', '330ml', 8.50, 40, '2027-09-27', 1),\n(81, 'Fruit Drink 500ml', 'Kasapreko', 'Beverage', 'Ghana', '500ml', 9.20, 53, '2027-10-01', 1),\n(82, 'Fruit Drink 500ml (Variant 2)', 'Kasapreko', 'Beverage', 'Ghana', '500ml', 9.90, 66, '2027-11-02', 1),\n(83, 'Fruit Drink 500ml (Variant 3)', 'Kasapreko', 'Beverage', 'Ghana', '500ml', 10.60, 79, '2027-12-03', 1),\n(84, 'Fruit Drink 500ml (Variant 4)', 'Kasapreko', 'Beverage', 'Ghana', '500ml', 11.30, 92, '2027-01-04', 1),\n(85, 'Cocoa Powder 250g', 'Cocoa Processing Company', 'Cocoa', 'Ghana', '250g', 12.00, 5, '2027-02-05', 1),\n(86, 'Cocoa Powder 250g (Variant 2)', 'Cocoa Processing Company', 'Cocoa', 'Ghana', '250g', 12.70, 18, '2027-03-06', 1),\n(87, 'Cocoa Powder 250g (Variant 3)', 'Cocoa Processing Company', 'Cocoa', 'Ghana', '250g', 13.40, 31, '2027-04-07', 1),\n(88, 'Cocoa Powder 250g (Variant 4)', 'Cocoa Processing Company', 'Cocoa', 'Ghana', '250g', 14.10, 44, '2027-05-08', 1),\n(89, 'Cocoa Powder 500g', 'Cocoa Processing Company', 'Cocoa', 'Ghana', '500g', 14.80, 57, '2027-06-09', 1),\n(90, 'Cocoa Powder 500g (Variant 2)', 'Cocoa Processing Company', 'Cocoa', 'Ghana', '500g', 15.50, 70, '2027-07-10', 1),\n(91, 'Cocoa Powder 500g (Variant 3)', 'Cocoa Processing Company', 'Cocoa', 'Ghana', '500g', 16.20, 83, '2027-08-11', 1),\n(92, 'Cocoa Powder 500g (Variant 4)', 'Cocoa Processing Company', 'Cocoa', 'Ghana', '500g', 16.90, 96, '2027-09-12', 1),\n(93, 'Chocolate Drink 400g', 'Cocoa Processing Company', 'Cocoa', 'Ghana', '400g', 17.60, 9, '2027-10-13', 1),\n(94, 'Chocolate Drink 400g (Variant 2)', 'Cocoa Processing Company', 'Cocoa', 'Ghana', '400g', 18.30, 22, '2027-11-14', 1),\n(95, 'Chocolate Drink 400g (Variant 3)', 'Cocoa Processing Company', 'Cocoa', 'Ghana', '400g', 19.00, 35, '2027-12-15', 1),\n(96, 'Chocolate Drink 400g (Variant 4)', 'Cocoa Processing Company', 'Cocoa', 'Ghana', '400g', 19.70, 48, '2027-01-16', 1),\n(97, 'Mineral Water 500ml', 'Twellium', 'Soft Drink', 'Ghana', '500ml', 20.40, 61, '2027-02-17', 1),\n(98, 'Mineral Water 500ml (Variant 2)', 'Twellium', 'Soft Drink', 'Ghana', '500ml', 21.10, 74, '2027-03-18', 1),\n(99, 'Mineral Water 500ml (Variant 3)', 'Twellium', 'Soft Drink', 'Ghana', '500ml', 21.80, 87, '2027-04-19', 1),\n(100, 'Mineral Water 500ml (Variant 4)', 'Twellium', 'Soft Drink', 'Ghana', '500ml', 22.50, 0, '2027-05-20', 0),\n(101, 'Soft Drink 330ml', 'Twellium', 'Soft Drink', 'Ghana', '330ml', 23.20, 13, '2027-06-21', 1),\n(102, 'Soft Drink 330ml (Variant 2)', 'Twellium', 'Soft Drink', 'Ghana', '330ml', 23.90, 26, '2027-07-22', 1),\n(103, 'Soft Drink 330ml (Variant 3)', 'Twellium', 'Soft Drink', 'Ghana', '330ml', 24.60, 39, '2027-08-23', 1),\n(104, 'Soft Drink 330ml (Variant 4)', 'Twellium', 'Soft Drink', 'Ghana', '330ml', 25.30, 52, '2027-09-24', 1),\n(105, 'Soft Drink 1.5L', 'Twellium', 'Soft Drink', 'Ghana', '1.5L', 26.00, 65, '2027-10-25', 1),\n(106, 'Soft Drink 1.5L (Variant 2)', 'Twellium', 'Soft Drink', 'Ghana', '1.5L', 26.70, 78, '2027-11-26', 1),\n(107, 'Soft Drink 1.5L (Variant 3)', 'Twellium', 'Soft Drink', 'Ghana', '1.5L', 27.40, 91, '2027-12-27', 1),\n(108, 'Soft Drink 1.5L (Variant 4)', 'Twellium', 'Soft Drink', 'Ghana', '1.5L', 3.10, 4, '2027-01-01', 1),\n(109, 'Yoghurt 500ml', 'FanMilk', 'Dairy / Frozen', 'Ghana', '500ml', 3.80, 17, '2027-02-02', 1),\n(110, 'Yoghurt 500ml (Variant 2)', 'FanMilk', 'Dairy / Frozen', 'Ghana', '500ml', 4.50, 30, '2027-03-03', 1),\n(111, 'Yoghurt 500ml (Variant 3)', 'FanMilk', 'Dairy / Frozen', 'Ghana', '500ml', 5.20, 43, '2027-04-04', 1),\n(112, 'Yoghurt 500ml (Variant 4)', 'FanMilk', 'Dairy / Frozen', 'Ghana', '500ml', 5.90, 56, '2027-05-05', 1),\n(113, 'Ice Cream 1L', 'FanMilk', 'Dairy / Frozen', 'Ghana', '1L', 6.60, 69, '2027-06-06', 1),\n(114, 'Ice Cream 1L (Variant 2)', 'FanMilk', 'Dairy / Frozen', 'Ghana', '1L', 7.30, 82, '2027-07-07', 1),\n(115, 'Ice Cream 1L (Variant 3)', 'FanMilk', 'Dairy / Frozen', 'Ghana', '1L', 8.00, 95, '2027-08-08', 1),\n(116, 'Ice Cream 1L (Variant 4)', 'FanMilk', 'Dairy / Frozen', 'Ghana', '1L', 8.70, 8, '2027-09-09', 1),\n(117, 'Frozen Dessert 100ml', 'FanMilk', 'Dairy / Frozen', 'Ghana', '100ml', 9.40, 21, '2027-10-10', 1),\n(118, 'Frozen Dessert 100ml (Variant 2)', 'FanMilk', 'Dairy / Frozen', 'Ghana', '100ml', 10.10, 34, '2027-11-11', 1),\n(119, 'Frozen Dessert 100ml (Variant 3)', 'FanMilk', 'Dairy / Frozen', 'Ghana', '100ml', 10.80, 47, '2027-12-12', 1),\n(120, 'Frozen Dessert 100ml (Variant 4)', 'FanMilk', 'Dairy / Frozen', 'Ghana', '100ml', 11.50, 60, '2027-01-13', 1);\n\n-- Verify the number of records
 SELECT COUNT(*) AS total_grocery_items FROM grocery_items;
 
--- Query 1: list products alphabetically.
-SELECT item_id, product_name, brand_name, category, package_size, price_ghs
+-- Example of a more detailed query
+SELECT brand_name, category, COUNT(*) AS product_count,
+       ROUND(AVG(price_ghs), 2) AS average_price_ghs,
+       SUM(stock_quantity) AS total_stock
 FROM grocery_items
-ORDER BY product_name ASC;
-
--- Query 2: products priced above the table average (subquery).
-SELECT product_name, brand_name, price_ghs
-FROM grocery_items
-WHERE price_ghs > (SELECT AVG(price_ghs) FROM grocery_items)
-ORDER BY price_ghs DESC;
-
--- Query 3: count and average price by category (aggregation).
-SELECT category, COUNT(*) AS item_count, ROUND(AVG(price_ghs), 2) AS average_price_ghs
-FROM grocery_items
-GROUP BY category
-ORDER BY average_price_ghs DESC;
-
--- Query 4: low-stock items.
-SELECT item_id, product_name, brand_name, stock_quantity
-FROM grocery_items
-WHERE stock_quantity < 15
-ORDER BY stock_quantity ASC;
-
--- Query 5: rank products by price within each category (window function).
-SELECT category, product_name, brand_name, price_ghs,
-       DENSE_RANK() OVER (PARTITION BY category ORDER BY price_ghs DESC) AS price_rank_in_category
-FROM grocery_items
-ORDER BY category, price_rank_in_category;
-
--- Query 6: count listed variants per brand.
-SELECT brand_name, COUNT(*) AS listed_variants
-FROM grocery_items
-GROUP BY brand_name
-ORDER BY listed_variants DESC;
+GROUP BY brand_name, category
+ORDER BY product_count DESC, average_price_ghs ASC;
